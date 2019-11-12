@@ -21,7 +21,17 @@ const q2 = `
   ON t.MediaTypeId = m.MediaTypeId
   WHERE t.Name = 'Rehab')
 `
-const q3 = ``
+const q3 = `
+  SELECT p.Name, COUNT(p.Name) AS "Nombre de chanson",
+  SUM(t.Milliseconds)/60000 AS "Temps total de la playlist (min)",
+  (SUM(t.Milliseconds)/COUNT(p.Name))/60000 AS "Temps moyen d'une chanson (min)"
+  FROM Playlist p
+  JOIN PlaylistTrack pt
+  ON p.PlaylistId = pt.PlaylistId
+  JOIN Track t
+  ON pt.TrackId = t.TrackId
+  GROUP BY p.Name 
+`
 const q4 = ``
 const q5 = ``
 const q6 = ``
