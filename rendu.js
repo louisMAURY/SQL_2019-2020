@@ -1,12 +1,26 @@
-const name = "jean-dupont"
+const name = "louis-maury"
 const promo = "B2A"
 
 const q1 = `
-  SELECT *
-  FROM Customer
+  SELECT Name, Milliseconds AS "Temps (ms)"
+  FROM Track
+  WHERE Milliseconds < (SELECT Milliseconds
+  FROM Track
+  WHERE TrackId = 3457)
+  ORDER BY Milliseconds ASC
 `
-const q1 = ``
-const q2 = ``
+const q2 = `
+  SELECT t.Name
+  FROM Track t
+  JOIN MediaType m
+  ON t.MediaTypeId = m.MediaTypeId
+  WHERE m.Name = (
+  SELECT m.Name
+  FROM Track t
+  JOIN MediaType m
+  ON t.MediaTypeId = m.MediaTypeId
+  WHERE t.Name = 'Rehab')
+`
 const q3 = ``
 const q4 = ``
 const q5 = ``
