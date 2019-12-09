@@ -4,7 +4,8 @@ const promo = "B2A"
 const q1 = `
   SELECT Name, Milliseconds AS "Temps (ms)"
   FROM Track
-  WHERE Milliseconds < (SELECT Milliseconds
+  WHERE Milliseconds < (
+  SELECT Milliseconds
   FROM Track
   WHERE TrackId = 3457)
   ORDER BY Milliseconds ASC
@@ -41,10 +42,10 @@ const q4 = `
   ON pt.TrackId = t.TrackId
   GROUP By p.Name
   HAVING SUM(t.Milliseconds) >= AVG(t.Milliseconds)
-  ORDER BY SUM(-.Milliseconds) DESC
+  ORDER BY SUM(t.Milliseconds) DESC
 `
 const q5 = `
-  SELECT p.PlaylistId, COUNT(p.Name) AS "Nombre de Chanson
+  SELECT p.PlaylistId, COUNT(p.Name) AS "Nombre de Chansons"
   FROM Playlist p
   JOIN PlaylistTrack pt
   ON p.PLaylistId = pt.PlaylistId
@@ -58,7 +59,7 @@ const q5 = `
     GROUP BY p.PlaylistId
   )
   UNION
-  SELECT p.PlaylistId, COUNT(p.Name) AS "Nombre de Chanson
+  SELECT p.PlaylistId, COUNT(p.Name) AS "Nombre de Chansons"
   FROM Playlist p
   JOIN PlaylistTrack pt
   ON p.PLaylistId = pt.PlaylistId
@@ -94,8 +95,8 @@ const q6 = `
 const q7 = `
   SELECT BillingCountry,
   MIN(Total) AS "Commande la moins élevée",
-  MAX(Total) AS Commande la plus élevée",
-  AVG(Total) AS Nombre de commande",
+  MAX(Total) AS "Commande la plus élevée",
+  AVG(Total) AS "Nombre de commande",
   ROUND((2183.12/Total)), 2) AS "Pourcentage de commandes"
   FROM Invoice
   GROUP BY BillingCountry
@@ -104,7 +105,7 @@ const q7 = `
 const q8 = `
   SELECT t.Name
   al.Title AS "Album Title",
-  ar.Titla AS "Artist",
+  ar.Title AS "Artist",
   m.Name AS "Media Type",
   g.Name AS "Genre",
   t.UnitPrice
@@ -116,7 +117,7 @@ const q8 = `
   JOIN Artist ar
   ON al.ArtistId = ar.ArtistId
   JOIN Genre g
-  ON t.GenderId = g.GenreId
+  ON t.GenreId = g.GenreId
   WHERE UnitPrice > (
     SELECT AVG(UnitPrice)
     FROM Track
@@ -177,7 +178,7 @@ const q12 = `
   GROUP BY c.Country
 `
 const q13 = `
-  SELECT g.Name, MAX(t.Milliseconds) AS "Chanson la plus longue
+  SELECT g.Name, MAX(t.Milliseconds) AS "Chanson la plus longue"
   FROM InvoiceLine il
   JOIN Track t
   ON il.TrackId = t.TrackId
@@ -200,7 +201,7 @@ const q14 = `
 `
 const q15 = `
   SELECT e.LastName, e.FirstName,
-  SUM(i.InvoiceId) AS "Total de ventes par employé,
+  SUM(i.InvoiceId) AS "Total de ventes par employé",
   i.BillingCountry,
   mt.Name AS "Media Type"
   FROM Employee e
@@ -330,7 +331,7 @@ const q25 = `
 `
 const q26 = `
   ALTER TABLE Invoice
-  DROP COLUMN BillingPostalCode<
+  DROP COLUMN BillingPostalCode
 `
 
 
